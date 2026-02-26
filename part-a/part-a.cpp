@@ -8,17 +8,39 @@ using namespace std;
 /*******************************************************************************
  * Function prototype
 *******************************************************************************/
-
+//Time complexity is O(n)
 template <typename T>
-T findMaxRecTail(const T[] arr, const int size, int = 0)
+T findMaxRecTail(const T arr[], const int size, int i = 0, T currentMax = T())
 {
     // TO DO: Implement your code
+    if(i == 0)
+    {
+        currentMax = arr[0];
+    }
+
+    if(i == size - 1)
+    {
+        return currentMax;
+    }
+    T temp = arr[i] > currentMax ? arr[i] : currentMax;
+    return findMaxRecTail(arr, size, i+1, temp);
 }
 
 template <typename T>
-T findMaxRecBinarySplit(const T[] arr, const int left, const int right)
+T findMaxRecBinarySplit(const T arr[], const int left, const int right)
 {
     // TO DO: Implement your code
+    if(left == right)
+    {
+        return arr[left];
+    }
+
+    int middle = (left+right)/2;
+
+    T maxLeft = findMaxRecBinarySplit(arr, left, middle);
+    T maxRight = findMaxRecBinarySplit(arr, middle + 1, right);
+
+    return maxLeft > maxRight ? maxLeft : maxRight;
 }
 /*******************************************************************************
  * Description:
